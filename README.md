@@ -23,7 +23,7 @@ As this is a slow process, elements that have been already processed and succeed
 The time limit for each calculation is 20 minutes, if this is exceeded, the input files is copied into _output/failure/_ and the execution for this particular file stops.
 
 ## `./step4.sh`
-This converts the gfan output (an initial idea) from previous step (_x-y-z.step3_) into Singular format (the original file is left intact. And then finds the generators for that initial ideal with `step4.singular`
+This converts the gfan output (an initial ideal) from previous step (_x-y-z.step3_) into Singular format (the original file is left intact. And then finds a smaller set of generators for that initial ideal with `step4.singular`
 
 * **Input:**  _output/initial_ideals/x-y-z.step3_
 * **Output:** _output/iigen/x-y-z.step4_
