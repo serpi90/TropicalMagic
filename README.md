@@ -40,8 +40,7 @@ Prints the Categorization (1, 2 or 3) for the elements obtained in the beginning
 
 This is reads the _element.txt_ file and outputs (to console) the following information about each element (separated by tabs)
 * Type
-    * 1, 2 or 3
-    * See: [Arithmetics and combinatorics of tropical Severi varieties of univariate polynomials](http://arxiv.org/abs/1601.05479)
+    * 1, 2 or 3 _(See: [Arithmetics and combinatorics of tropical Severi varieties of univariate polynomials](http://arxiv.org/abs/1601.05479))_
 * Hidden Ties
     * Relevant when type is 3, in any other case this is `[]`
     * Example: `[(4, 5)]`
