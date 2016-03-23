@@ -1,0 +1,73 @@
+execute(read("output.txt"));
+// We loaded the ring R and the poly vector f from an external file
+list fn;
+int i; int j; int k;
+// Remove monomial factors from the input functions
+def factors;
+for( i=1 ; i <= nrows(f) ; i++ )
+{
+	fn[i] = f[i];
+	factors = factorize(fn[i]);
+	for( j=1 ; j <= size(factors[1]) ; j++ )
+	{
+		if( size(factors[1][j]) <= 1 )
+		{
+			fn[i] = fn[i] / factors[1][j]^factors[2][j];
+		}
+	}
+}
+
+// cVars = 1 - x*y*z*T
+poly cVars = 1;
+for( i=1; i <= nvars(R) ; i++ )
+{
+	cVars = cVars * var(i);
+}
+
+// Initialize S as 1-x*y*z*T, fn[1]
+list S;
+S = insert( S, 1 - cVars );
+S = insert( S, fn[1] );
+ideal I; ideal emptyIdeal;
+// Start at i=2, cVars can not be removed
+for( i=2 ; i <= nrows(f) ; i++ )
+{
+	// Build an ideal from S
+	I = emptyIdeal;
+	for( k=1 ; k <= size(S) ; k++ )
+	{
+		I[k] = S[k];
+	}
+	// Do not add the ones that can already be built with S
+	if( reduce( fn[i], std(I) ) != 0 )
+	{
+		j=1;
+		// Remove from S the ones that can be built after adding fn[i] to the ideal
+		while( j < size(S) )
+		{
+			I = emptyIdeal;
+			for( k=1 ; k<=size(S) ; k++ )
+			{
+				I[k] = S[k];
+			}
+			I[j] = fn[i];
+			if( reduce( S[j], std(I) ) == 0 )
+			{
+				S = delete( S, j );
+			}
+			else
+			{
+				// Increment here, when removing S[j], the length of S changes and
+				// S[j] now contains what previously was S[j+1]
+				j++;
+			}
+		}
+		// Add fn[i] to the end of S
+		S = insert( S, fn[i], size(S)-1 );
+	}
+}
+// Output the result
+print("# Input");
+fn;
+print("# Output");
+S;
