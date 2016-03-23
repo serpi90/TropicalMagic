@@ -1,3 +1,5 @@
+# TropicalMagic
+
 Place the input files in the _input_ folder, refer to _input/README.md_ for file format
 
 ## `./step1and2.py`
@@ -60,6 +62,4 @@ Example line:
 
 Example output _3-12-13.png_:
 ![3-12-13.png](sample.png)
-
-
 
