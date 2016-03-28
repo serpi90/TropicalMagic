@@ -33,7 +33,7 @@ Prints the Categorization (1, 2 or 3) for the elements obtained in the beginning
 
 `./newtondiagrams.py --plot` (argument is optional)  will output the _output/diagrams/x-y-z.png_ file for each element, generated using `gnuplot < plot.gnuplot`.
 
-  
+`./newtondiagrams.py --excel` (argument is optional) will output the _output/Results.xlsx? file containing the output described below.
 
 * **Input:**  _output/elements.txt_
 * **Output:** _stdout_ (console), _output/diagrams/x-y-z.png_ (if `--plot` is used)
@@ -44,20 +44,18 @@ This is reads the _element.txt_ file and outputs (to console) the following info
 * Hidden Ties
     * Relevant when type is 3, in any other case this is `[]`
     * Example: `[(4, 5)]`
-* Side lengths of the lower hull with more tan three points
-    * Example: `[3, 3]`
 * Lower Hull:
     * List of the x coordinates for forming the hull sides.
     * Example: `[[0, 2], [2, 3, 4], [4, 5, 6]]`
 * Points (from the element, enumerated):
     * The coordinates of the points for that newton diagram.
-    * Example `[(0, 1225), (1, 1564), (2, 600), (3, 300), (4, 0), (5, 0), (6, 0)]`
+    * Example `[1225, 1564, 600, 300, 0, 0, 0]`
 * Rays (the cone)
     * The indexes of the rays generating the cone for this element.
     * Example: `[3, 12, 13]`
 
 Example line:
-`1	[]	[3, 3]	[[0, 2], [2, 3, 4], [4, 5, 6]]	[(0, 1225), (1, 1564), (2, 600), (3, 300), (4, 0), (5, 0), (6, 0)]	[3, 12, 13]`
+`1	[]	[[0, 2], [2, 3, 4], [4, 5, 6]]	[1225, 1564, 600, 300, 0, 0, 0]	[3, 12, 13]`
 
 Example output _3-12-13.png_:
 ![3-12-13.png](sample.png)

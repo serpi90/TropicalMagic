@@ -2,9 +2,12 @@
 import operator
 import os
 import argparse
+import xlsxwriter
 parser = argparse.ArgumentParser()
 parser.add_argument('--plot', required=False, action='store_const', const=True, default=False)
-plot=parser.parse_args().plot
+parser.add_argument('--excel', required=False, action='store_const', const=True, default=False)
+plot = parser.parse_args().plot
+excel = parser.parse_args().excel
 
 if plot:
 	os.system("mkdir -p output/diagrams")
@@ -38,9 +41,9 @@ def categorize( sides, points ):
 	length3 = filter( lambda x: len(x)==3, sides)
 	length4 = filter( lambda x: len(x)==4, sides)
 	if ( len(length3) == 2 ) and ( len(lengths) == 2 ):
-		return "1\t[]"
+		return 1,[]
 	elif ( len(length4) == 1 ) and ( len(lengths) == 1 ):
-		return "2\t[]"
+		return 2,[]
 	elif ( len(length3) == 1 ) and ( len(lengths) == 1 ):
 		first = points[length3[0][0]]
 		last = points[length3[0][2]]
@@ -51,9 +54,9 @@ def categorize( sides, points ):
 			for j in range( i+1, len(possible_draws) ):
 				if slope(possible_draws[i],possible_draws[j]) == s:
 					draws.append((possible_draws[i][0],possible_draws[j][0]))
-		return "3\t%s" % draws
+		return 3,draws
 	else:
-		return "?\t[]"
+		return "?",[]
 
 
 # Read the elements and cones from "output/elements.txt"
@@ -70,6 +73,15 @@ for line in elementsFile:
 		cones.append( cone )
 		elements.append( element )
 elementsFile.close()
+
+if excel:
+	book = xlsxwriter.Workbook("output/Results.xlsx")
+	sheet = book.add_worksheet("Results")
+	sheet.write( 0, 0, "Type")
+	sheet.write( 0, 1, "Hidden Ties")
+	sheet.write( 0, 2, "Lower Hull")
+	sheet.write( 0, 3, "Rays")
+	sheet.write( 0, 4, "Cone")
 
 for e in range(0, len(elements)):
 	element = list(enumerate(elements[e]))
@@ -95,7 +107,14 @@ for e in range(0, len(elements)):
 	result[len(result)-1].append(len(element)-1)
 
 	# Output the result
-	print "%s\t%s\t%s\t%s\t%s" % (categorize(result, element), filter(lambda x: x>2, map(len,result)), result, element, cones[e])
+	typ,ties = categorize(result, element)
+	print "%s\t%s\t%s\t%s\t%s" % (typ, ties, result, map(lambda t: t[1], element), cones[e])
+	if excel:
+		sheet.write( e+1, 0, str(typ) )
+		sheet.write( e+1, 1, str(ties) )
+		sheet.write( e+1, 2, str(result) )
+		sheet.write( e+1, 3, str(map( lambda t: t[1], element )) )
+		sheet.write( e+1, 4, str(cones[e]))
 
 	# If --plot was indicated, then generate the png diagram	
 	if plot:
@@ -110,3 +129,5 @@ for e in range(0, len(elements)):
 		os.system("gnuplot < plot.gnuplot ; mv test.png output/diagrams/%s.png" % reduce( lambda x,y: "%s-%s" % (x,y), cones[e]) )
 		os.system("rm -f lower.dat points.dat")
 
+if excel:
+	book.close()
