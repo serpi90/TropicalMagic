@@ -1,5 +1,11 @@
 # TropicalMagic
 
+## Dependencies
+* gfan
+* Singular
+* Python 2.7
+* xlsxwriter module for python (if using `./newtondiagrams.py --excel`)
+* gnuplot (if using `./newtondiagrams.py --plot`)
 Place the input files in the _input_ folder, refer to _input/README.md_ for file format
 
 ## `./step1and2.py`

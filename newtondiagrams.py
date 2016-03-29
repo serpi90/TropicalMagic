@@ -2,12 +2,13 @@
 import operator
 import os
 import argparse
-import xlsxwriter
 parser = argparse.ArgumentParser()
 parser.add_argument('--plot', required=False, action='store_const', const=True, default=False)
 parser.add_argument('--excel', required=False, action='store_const', const=True, default=False)
 plot = parser.parse_args().plot
 excel = parser.parse_args().excel
+if excel:
+	import xlsxwriter
 
 if plot:
 	os.system("mkdir -p output/diagrams")
