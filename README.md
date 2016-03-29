@@ -6,9 +6,11 @@
 * Python 2.7
 * xlsxwriter module for python (if using `./newtondiagrams.py --excel`)
 * gnuplot (if using `./newtondiagrams.py --plot`)
+
+## Usage
 Place the input files in the _input_ folder, refer to _input/README.md_ for file format
 
-## `./step1and2.py`
+### `./step1and2.py`
 This generates the elements inside the cones, to be processed by gfan later in `step3.sh`
 
 * **Input:**  `input/cones`, `input/rays` and `input/reduced_grobner_base`
@@ -19,7 +21,7 @@ _elements.txt_ contains a list of the generated elements, and the generator cone
 
 _x-y-z.step2_ has __gfan__ format
 
-## `./step3.sh`
+### `./step3.sh`
 This proceses the elements generated in the previous step, and generates initial ideals for those elements using `gfan_initialforms --ideal`.
 
 * **Input:**  _output/elements/x-y-z.step2_
@@ -28,13 +30,13 @@ This proceses the elements generated in the previous step, and generates initial
 As this is a slow process, elements that have been already processed and succeeded are not processed again (the input file is copied to _output/success/_).
 The time limit for each calculation is 20 minutes, if this is exceeded, the input files is copied into _output/failure/_ and the execution for this particular file stops.
 
-## `./step4.sh`
+### `./step4.sh`
 This converts the gfan output (an initial ideal) from previous step (_x-y-z.step3_) into Singular format (the original file is left intact. And then finds a smaller set of generators for that initial ideal with `step4.singular`
 
 * **Input:**  _output/initial_ideals/x-y-z.step3_
 * **Output:** _output/iigen/x-y-z.step4_
 
-## `./newtondiagrams.py`
+### `./newtondiagrams.py`
 Prints the Categorization (1, 2 or 3) for the elements obtained in the beginning, the lower hull, the element and the cone.
 
 `./newtondiagrams.py --plot` (argument is optional)  will output the _output/diagrams/x-y-z.png_ file for each element, generated using `gnuplot < plot.gnuplot`.
