@@ -124,8 +124,9 @@ for e in range(0, len(elements)):
 			pointsFile.write("%i %i\n" % tuple(x))
 		pointsFile.close()
 		lowerFile = open("lower.dat", "w")
-		for x in lower:
-			lowerFile.write("%i %i\n" % tuple(x))
+		for side in result:
+			for x in side:
+				lowerFile.write("%i %i\n" % tuple(element[x]))
 		lowerFile.close()
 		os.system("gnuplot < plot.gnuplot ; mv test.png output/diagrams/%s.png" % reduce( lambda x,y: "%s-%s" % (x,y), cones[e]) )
 		os.system("rm -f lower.dat points.dat")
