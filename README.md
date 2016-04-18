@@ -41,7 +41,9 @@ Prints the Categorization (1, 2 or 3) for the elements obtained in the beginning
 
 `./newtondiagrams.py --plot` (argument is optional)  will output the _output/diagrams/x-y-z.png_ file for each element, generated using `gnuplot < plot.gnuplot`.
 
-`./newtondiagrams.py --excel` (argument is optional) will output the _output/Results.xlsx? file containing the output described below.
+`./newtondiagrams.py --excel` (argument is optional) will output the _output/Results.xlsx_ file containing the output described below.
+
+`./newtondiagrams.py --quiet` (argument is optional) suppresses the console output.
 
 * **Input:**  _output/elements.txt_
 * **Output:** _stdout_ (console), _output/diagrams/x-y-z.png_ (if `--plot` is used)
@@ -69,3 +71,12 @@ Example output _3-12-13.png_:
 
 ![3-12-13.png](sample.png)
 
+### `./Generators.py`
+Reads _input/generators_ which contains cones, and tries to reduce the rays to the generator rays for the cone.
+
+* **Input:** _input/rays_ and _input/generators_
+* **Output:** _output/generators.txt_
+
+The output file _generators.txt_ has the input cone and the result cone separated by tabs, one cone per line.
+{a b c d e} {a b c}
+{x y z} {x y}

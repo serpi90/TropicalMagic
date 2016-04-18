@@ -2,3 +2,4 @@ input/*
 !input/README.md
 output/*
 !output/README.md
+*.pyc

@@ -2,8 +2,9 @@ Input files should be here:
 * cones
 * rays
 * reduced_grobner_base
+* generators
 
-## cones
+## cones and generators
 format {w x y z}
 enclosed with bracket, one per line
 ### Example:
