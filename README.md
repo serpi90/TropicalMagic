@@ -22,7 +22,7 @@ _elements.txt_ contains a list of the generated elements, and the generator cone
 _x-y-z.step2_ has __gfan__ format
 
 ### `./step3.sh`
-This proceses the elements generated in the previous step, and generates initial ideals for those elements using `gfan_initialforms --ideal`.
+This processes the elements generated in the previous step, and generates initial ideals for those elements using `gfan_initialforms --ideal`.
 
 * **Input:**  _output/elements/x-y-z.step2_
 * **Output:** _output/initial_ideals/x-y-z.step3_
@@ -31,13 +31,13 @@ As this is a slow process, elements that have been already processed and succeed
 The time limit for each calculation is 20 minutes, if this is exceeded, the input files is copied into _output/failure/_ and the execution for this particular file stops.
 
 ### `./step4.sh`
-This converts the gfan output (an initial ideal) from previous step (_x-y-z.step3_) into Singular format (the original file is left intact. And then finds a smaller set of generators for that initial ideal with `step4.singular`
+This converts the gfan output (an initial ideal) from previous step (_x-y-z.step3_) into Singular format (the original file is left intact). And then finds a smaller set of generators for that initial ideal with `step4.singular`
 
 * **Input:**  _output/initial_ideals/x-y-z.step3_
 * **Output:** _output/iigen/x-y-z.step4_
 
 ### `./newtondiagrams.py`
-Prints the Categorization (1, 2 or 3) for the elements obtained in the beginning, the lower hull, the element and the cone.
+Prints the Type (1, 2 or 3) for the elements obtained in the beginning, the lower hull, the element and the cone.
 
 `./newtondiagrams.py --plot` (argument is optional)  will output the _output/diagrams/x-y-z.png_ file for each element, generated using `gnuplot < plot.gnuplot`.
 
@@ -65,7 +65,9 @@ This is reads the _element.txt_ file and outputs (to console) the following info
     * Example: `[3, 12, 13]`
 
 Example line:
-`1	[]	[[0, 2], [2, 3, 4], [4, 5, 6]]	[1225, 1564, 600, 300, 0, 0, 0]	[3, 12, 13]`
+```
+1	[]	[[0, 2], [2, 3, 4], [4, 5, 6]]	[1225, 1564, 600, 300, 0, 0, 0]	[3, 12, 13]
+```
 
 Example output _3-12-13.png_:
 
@@ -77,6 +79,10 @@ Reads _input/generators_ which contains cones, and tries to reduce the rays to t
 * **Input:** _input/rays_ and _input/generators_
 * **Output:** _output/generators.txt_
 
-The output file _generators.txt_ has the input cone and the result cone separated by tabs, one cone per line.
-{a b c d e} {a b c}
-{x y z} {x y}
+The output file _generators.txt_ has the input cone and the result cone separated by tabs and `=>`, one cone per line. And a set of all the generator rays at the end.
+```
+# Cones	=>	Generators:
+{a b c d e}	=>	{a b c}
+{x y z}	=>	{x y}
+# Generator Rays: [a, b, c, x, y]
+```

@@ -81,7 +81,7 @@ def lower_hull(points):
 def slope(a, b):
 	return float(a[1]-b[1]) / float(a[0]-b[0])
 
-def categorize( sides, points ):
+def getConeType( sides, points ):
 	lengths = filter( lambda x: len(x)>2,  sides)
 	length3 = filter( lambda x: len(x)==3, sides)
 	length4 = filter( lambda x: len(x)==4, sides)
@@ -144,7 +144,7 @@ for cone in elementsByCone.keys():
 	sides = findLowerHullSides(points, lowerHull)
 
 	# Output the result
-	coneType = categorize(sides, points)
+	coneType = getConeType(sides, points)
 	hiddenTies = []
 	if coneType == 3:
 		hiddenTies = findHiddenTies( sides, points )
