@@ -25,7 +25,7 @@ _x-y-z.step2_ has __gfan__ format
 This processes the elements generated in the previous step, and generates initial ideals for those elements using `gfan_initialforms --ideal`.
 
 * **Input:**  _output/elements/x-y-z.step2_
-* **Output:** _output/initial_ideals/x-y-z.step3_
+* **Output:** *output/initial_ideals/x-y-z.step3*
 
 As this is a slow process, elements that have been already processed and succeeded are not processed again (the input file is copied to _output/success/_).
 The time limit for each calculation is 20 minutes, if this is exceeded, the input files is copied into _output/failure/_ and the execution for this particular file stops.
@@ -33,7 +33,7 @@ The time limit for each calculation is 20 minutes, if this is exceeded, the inpu
 ### `./step4.sh`
 This converts the gfan output (an initial ideal) from previous step (_x-y-z.step3_) into Singular format (the original file is left intact). And then finds a smaller set of generators for that initial ideal with `step4.singular`
 
-* **Input:**  _output/initial_ideals/x-y-z.step3_
+* **Input:**  *output/initial_ideals/x-y-z.step3*
 * **Output:** _output/iigen/x-y-z.step4_
 
 ### `./newtondiagrams.py`
@@ -46,7 +46,7 @@ Prints the Type (1, 2 or 3) for the elements obtained in the beginning, the lowe
 `./newtondiagrams.py --quiet` (argument is optional) suppresses the console output.
 
 * **Input:**  _output/elements.txt_
-* **Output:** _stdout_ (console), _output/diagrams/x-y-z.png_ (if `--plot` is used)
+* **Output:** _stdout_ (console), _output/diagrams/x-y-z.png_ (if `--plot` is used), _output/Results.xlsx_ (if `--excel` is used)
 
 This is reads the _element.txt_ file and outputs (to console) the following information about each element (separated by tabs)
 * Type
@@ -73,8 +73,10 @@ Example output _3-12-13.png_:
 
 ![3-12-13.png](sample.png)
 
-### `./Generators.py`
+### `./generators.py`
 Reads _input/generators_ which contains cones, and tries to reduce the rays to the generator rays for the cone.
+
+This is done by invoking the Singular commands `containsInSupport` and `containsRelatively`, if a ray is included in the cone determined by other rays, then it's removed.
 
 * **Input:** _input/rays_ and _input/generators_
 * **Output:** _output/generators.txt_
